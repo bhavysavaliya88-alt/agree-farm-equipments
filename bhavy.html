@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html ng-app="farmApp">
+
+<head>
+<meta charset="UTF-8">
+<title>Farm Equipment SPA</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:linear-gradient(120deg,#8BC34A,#C8E6C9);
+min-height:100vh;
+}
+
+/* HEADER */
+
+header{
+background:#2E7D32;
+color:white;
+padding:15px;
+text-align:center;
+}
+
+/* NAVBAR */
+
+nav{
+background:#1B5E20;
+padding:10px;
+text-align:center;
+}
+
+nav button{
+margin:5px;
+padding:10px 20px;
+border:none;
+background:#A5D6A7;
+cursor:pointer;
+font-weight:bold;
+border-radius:5px;
+transition:0.3s;
+}
+
+nav button:hover{
+background:white;
+transform:scale(1.05);
+}
+
+/* CONTAINER */
+
+.container{
+padding:30px;
+text-align:center;
+}
+
+/* FORM INPUT */
+
+input{
+display:block;
+margin:10px auto;
+padding:10px;
+width:250px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button.submit{
+background:#2E7D32;
+color:white;
+border:none;
+padding:10px 20px;
+cursor:pointer;
+border-radius:5px;
+}
+
+/* CARD LAYOUT */
+
+.card{
+background:white;
+padding:15px;
+margin:15px;
+border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,0.2);
+width:260px;
+display:inline-block;
+vertical-align:top;
+transition:0.3s;
+}
+
+/* CARD HOVER */
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* IMAGE STYLING */
+
+.card img{
+width:100%;
+height:170px;
+object-fit:cover;
+border-radius:10px;
+margin-bottom:12px;
+transition:transform 0.4s ease;
+}
+
+/* IMAGE ZOOM EFFECT */
+
+.card:hover img{
+transform:scale(1.08);
+}
+
+/* HEADINGS */
+
+h3{
+color:#2E7D32;
+margin-top:5px;
+}
+
+/* TEXT */
+
+p{
+font-size:14px;
+line-height:1.5;
+}
+
+</style>
+</head>
+
+<body ng-controller="mainController">
+
+<header>
+<h1>Farm Equipment Information System</h1>
+</header>
+
+<nav>
+<button ng-click="page='home'">Home</button>
+<button ng-click="page='models'">Equipment Models</button>
+<button ng-click="page='login'">Login</button>
+<button ng-click="page='register'">Register</button>
+</nav>
+
+<div class="container">
+
+<!-- HOME PAGE -->
+
+<div ng-show="page=='home'">
+
+<h2>Introduction to Farm Equipments</h2>
+
+<p>
+Farm equipment helps farmers perform agricultural activities efficiently.
+Modern agriculture uses various machines to increase productivity and reduce manual labor.
+</p>
+
+<div class="card">
+<img src="https://cdn.tractorsdekho.com/in/mahindra/yuvraj-215-nxt/mahindra-yuvraj-215-nxt-21206.jpg?impolicy=resize&imwidth=420">
+<h3>Tractor</h3>
+<p>
+A tractor is the most important farm machine used for plowing, tilling and pulling agricultural machinery.
+</p>
+</div>
+
+<div class="card">
+<img src="https://thumbs.dreamstime.com/b/farmer-plowing-bulls-wooden-plough-farmer-plowing-bulls-wooden-plough-maharashtra-india-109520589.jpg">
+<h3>Plough</h3>
+<p>
+Plough is used for turning the soil and preparing the land for planting crops.
+</p>
+</div>
+
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPSGUrjPsBZHyA5aPLxXpBSClIvWsPnSiHRQ&s">
+<h3>Seed Drill</h3>
+<p>
+Seed drill is used to plant seeds in the soil at the correct depth and spacing.
+</p>
+</div>
+
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfVNUsgutZf-QtT7rLw26RcQGzJ9YMvuzprQ&s">
+<h3>Harvester</h3>
+<p>
+A harvester is used to harvest crops like wheat, rice and corn efficiently.
+</p>
+</div>
+
+</div>
+
+<!-- MODELS PAGE -->
+
+<div ng-show="page=='models'">
+
+<h2>Popular Farm Equipment Models</h2>
+
+<div class="card" ng-repeat="m in models">
+
+<img ng-src="{{m.image}}">
+
+<h3>{{m.name}}</h3>
+
+<p><b>Company:</b> {{m.company}}</p>
+
+<p><b>Power:</b> {{m.power}}</p>
+
+<p><b>Price:</b> {{m.price}}</p>
+
+</div>
+
+</div>
+
+<!-- LOGIN PAGE -->
+
+<div ng-show="page=='login'">
+
+<h2>Login</h2>
+
+<form ng-submit="login()">
+
+<input type="text" placeholder="Username" ng-model="loginUser">
+
+<input type="password" placeholder="Password" ng-model="loginPass">
+
+<button class="submit">Login</button>
+
+</form>
+
+<p>{{loginMessage}}</p>
+
+</div>
+
+<!-- REGISTER PAGE -->
+
+<div ng-show="page=='register'">
+
+<h2>Registration</h2>
+
+<form ng-submit="register()">
+
+<input type="text" placeholder="Username" ng-model="regUser">
+
+<input type="email" placeholder="Email" ng-model="regEmail">
+
+<input type="password" placeholder="Password" ng-model="regPass">
+
+<button class="submit">Register</button>
+
+</form>
+
+<p>{{registerMessage}}</p>
+
+</div>
+
+</div>
+
+<script>
+
+var app = angular.module("farmApp", []);
+
+app.controller("mainController", function($scope){
+
+$scope.page="home";
+
+$scope.models=[
+
+{
+name:"Mahindra 575 DI",
+company:"Mahindra",
+power:"45 HP",
+price:"₹6,50,000",
+image:"https://5.imimg.com/data5/SELLER/Default/2022/9/IR/KZ/GP/31862577/mahindra-575-di-xp-plus.jpg"
+},
+
+{
+name:"John Deere 5050D",
+company:"John Deere",
+power:"50 HP",
+price:"₹7,20,000",
+image:"https://assets.tractorguru.in/tractor-guru/tractors/john-deere-5050d.webp"
+},
+
+{
+name:"Sonalika DI 750",
+company:"Sonalika",
+power:"55 HP",
+price:"₹7,80,000",
+image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwVOSnvAQ6nGevgAYzrKFq8JXQzlrO_9ntdQ&s"
+},
+
+{
+name:"New Holland 3630",
+company:"New Holland",
+power:"50 HP",
+price:"₹8,00,000",
+image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQivF9_xzLSmvN8w5WchBmubcV1BkrDqZOqGg&s"
+}
+
+];
+
+$scope.users=[];
+
+$scope.register=function(){
+
+$scope.users.push({
+username:$scope.regUser,
+password:$scope.regPass
+});
+
+$scope.registerMessage="Registration Successful!";
+$scope.regUser="";
+$scope.regEmail="";
+$scope.regPass="";
+}
+
+$scope.login=function(){
+
+var found=false;
+
+for(var i=0;i<$scope.users.length;i++){
+
+if($scope.users[i].username==$scope.loginUser &&
+$scope.users[i].password==$scope.loginPass){
+
+found=true;
+
+}
+
+}
+
+if(found){
+$scope.loginMessage="Login Successful";
+}
+else{
+$scope.loginMessage="Invalid Username or Password";
+}
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
